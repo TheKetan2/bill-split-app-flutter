@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BillSplit extends StatefulWidget {
@@ -14,7 +15,8 @@ class _BillSplitState extends State<BillSplit> {
     fontWeight: FontWeight.w700,
     color: Colors.black,
   );
-  double friendsCount = 0;
+  double friendsCount = 0, taxCount = 0, tipCount = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,8 +86,9 @@ class _BillSplitState extends State<BillSplit> {
                           children: [
                             Text(friendsCount.toInt().toString(),
                                 style: infoStyle),
-                            Text("14%", style: infoStyle),
-                            Text("15", style: infoStyle),
+                            Text("${taxCount.toInt().toString()}%",
+                                style: infoStyle),
+                            Text(tipCount.toInt().toString(), style: infoStyle),
                           ],
                         )
                       ],
@@ -97,7 +100,7 @@ class _BillSplitState extends State<BillSplit> {
             const SizedBox(
               height: 10,
             ),
-            Text("How many friends?}", style: infoStyle),
+            Text("How many friends?", style: infoStyle),
             Slider(
                 min: 0,
                 max: 15,
@@ -109,7 +112,114 @@ class _BillSplitState extends State<BillSplit> {
                   setState(() {
                     friendsCount = value;
                   });
-                })
+                }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.yellow,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Tip",
+                        style: infoStyle,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 25,
+                            height: 25,
+                            child: FloatingActionButton(
+                              onPressed: tipCount == 0
+                                  ? null
+                                  : () {
+                                      setState(() {
+                                        tipCount -= 1;
+                                      });
+                                    },
+                              child: Icon(Icons.remove),
+                            ),
+                          ),
+                          Text(
+                            tipCount.toInt().toString(),
+                            style: infoStyle,
+                          ),
+                          Container(
+                            width: 25,
+                            height: 25,
+                            child: FloatingActionButton(
+                              onPressed: () {
+                                setState(() {
+                                  tipCount += 1;
+                                });
+                              },
+                              child: Icon(Icons.add),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 3,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.yellow,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          taxCount = double.parse(value);
+                        });
+                      },
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          labelText: "Tax In %",
+                          labelStyle: infoStyle.copyWith(fontSize: 15),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          )),
+                    ),
+                  ),
+                )
+              ],
+            )
+            // Text("How much tax?}", style: infoStyle),
+            // Slider(
+            //     min: 0,
+            //     max: 15,
+            //     divisions: 15,
+            //     activeColor: Colors.yellow,
+            //     inactiveColor: Colors.grey,
+            //     value: taxCount,
+            //     onChanged: (value) {
+            //       setState(() {
+            //         taxCount = value;
+            //       });
+            //     }),
+            // Text("How much Tip?}", style: infoStyle),
+            // Slider(
+            //     min: 0,
+            //     max: 15,
+            //     divisions: 15,
+            //     activeColor: Colors.yellow,
+            //     inactiveColor: Colors.grey,
+            //     value: tipCount,
+            //     onChanged: (value) {
+            //       setState(() {
+            //         tipCount = value;
+            //       });
+            //     }),
           ],
         ),
       ),
