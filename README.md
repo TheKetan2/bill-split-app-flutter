@@ -1,4 +1,4 @@
-# bill_split_app_flutter
+# Bill Split App
 
 App to split bill amongst friends.
 
