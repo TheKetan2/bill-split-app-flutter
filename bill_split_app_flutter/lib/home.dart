@@ -221,6 +221,14 @@ class _BillSplitState extends State<BillSplit> {
                     style: infoStyle.copyWith(color: Colors.white),
                   ),
                 ),
+              ),
+              Center(
+                  child: Text(
+                "By Ketan Ramteke @theKetan2",
+                style: infoStyle.copyWith(fontSize: 15),
+              )),
+              const SizedBox(
+                height: 10,
               )
             ],
           ),
