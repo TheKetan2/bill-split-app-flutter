@@ -2,6 +2,6 @@
 
 App to split bill amongst friends.
 
-# Snapshot
+## Snapshot
 
 ![Bill Split App](snapshot.gif)
